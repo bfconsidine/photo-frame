@@ -8,6 +8,8 @@
 #include <GxEPD2_3C.h>
 #include <Fonts/FreeMonoBold9pt7b.h>
 
+#include "test.h"
+
 // select the display class and display driver class in the following file (new style):
 // #include "GxEPD2_display_selection_new_style.h"
 
@@ -27,13 +29,27 @@ const char test_message[] = "This is a test!";
 void setup()
 {
   display.init(115200);
-  helloWorld();
+  // helloWorld();
+  // delay(2000);
+  drawTest();
   // printMsg(test_message);
   display.hibernate();
 }
 
 const char HelloWorld[] = "Hello World!";
 const char dot[] = ".";
+
+
+void drawTest()
+{
+  display.setFullWindow();
+  display.writeScreenBuffer();
+  uint16_t x = display.width() / 2;
+  uint16_t y = display.height() / 2;
+  display.writeImage(logo200x200, x, y, 200, 200, false, true, false);
+  display.refresh(true);
+}
+
 
 void helloWorld()
 {
@@ -51,7 +67,8 @@ void helloWorld()
   {
     display.fillScreen(GxEPD_WHITE);
     display.setCursor(x, y);
-    display.print(HelloWorld);
+    // display.print(HelloWorld);
+    display.drawCircle(x, y, 50, GxEPD_BLACK);
   }
   while (display.nextPage());
 }
